@@ -21,7 +21,7 @@
  * Stores the scaling parameters and the current pose data for each user Kinect
  * tracks. 
  * 
- * @author Authors: Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
+ * @author Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
  * Last modified: 2015/09/24
  */
 

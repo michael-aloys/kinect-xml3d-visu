@@ -23,7 +23,7 @@
  * webserver that answers requests from clients with the current xml-formated
  * pose.
  * 
- * @author Authors: Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
+ * @author Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
  * Last modified: 2015/09/24
  */
 
