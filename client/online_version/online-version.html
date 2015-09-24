@@ -1,0 +1,307 @@
+<!--
+    Visualization of a Human using Kinect and XML3D - Prototype 2
+    Copyright (C) 2015  Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+
+<!-- 
+Prototype of a client that visualizes
+tracking data collected from Kinect. Uses XML3D
+for the 3D visualization.
+
+Supports up to 6 tracked users (maximum number of
+people Kinect v2 can track). Various visualization
+parameters can be set directly in a form. Expects
+the corresponding Kinect server to be running.
+
+Authors: Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
+Last modified: 2015/09/24
+
+-->
+<html>
+<head>
+<!-- XML3D scripts -->
+<script type="text/javascript" src="common/scripts/xml3d/xml3d-4.8-min.js"></script>
+<script type="text/javascript" src="common/scripts/blender-xflow.js"></script>
+<script type="text/javascript" src="common/scripts/xml3d/camera.js"></script> <!-- moves camera -->
+<!-- utility library -->
+<script type="text/javascript" src="common/scripts/jquery.js"></script>
+<title>Visualization of a Human using Kinect and XML3D - Prototype 2</title>  
+</head>
+<body>
+
+<!-- XML3D -->
+<xml3d activeView="#defaultView" class="xml3d" style="border: 1px solid gray">
+
+<!-- camera view -->
+<view id="defaultView" position="0 10 50" ></view>
+
+<!-- Lighting -->
+<lightshader id="light1" script="urn:xml3d:lightshader:directional" >
+  <float3 name="intensity" >1 1 1</float3>	
+</lightshader>  
+<lightshader id="mySpotLight1" script="urn:xml3d:lightshader:spot">
+  <float3 name="position">0 10 0</float3>
+  <float3 name="intensity">1 1 1</float3>
+  <float3 name="attenuation">1 0 0</float3>
+  <float3 name="direction">0 0 1</float3>
+  <float  name="beamWidth">1000.0</float>
+  <float  name="cutOffAngle">300.0</float>
+  <bool   name="castShadow">true</bool>
+</lightshader>
+
+<light shader="#light1" > </light>		
+<light shader="#light1" > </light>
+<light shader="#mySpotLight1" > </light>
+<light shader="#mySpotLight1" > </light>
+
+<!-- a triangle to make relative orientation in space better visible -->
+<mesh type="triangles" >
+  <int name="index">0 1 2</int>
+  <float3 name="position">-1 0 0  0 1 0  1 0 0 </float3>
+  <float3 name="normal">
+  0 0 1
+  0 0 1
+  0 0 1
+  </float3>
+</mesh>
+
+<!-- transformation to adapt the exported human model to the scene -->
+<transform id="trans" rotation="0 0 1 0" scale="1 1 1" translation="0 0 0" ></transform>
+
+<!-- human model data and current key-frame, shared among the models for efficency -->
+<asset id="human_model_with_key" src="assets/maleWorker.xml#human_model">
+  <assetdata name="human_model_mesh">
+    <float name="animKey" id="animation_key">1</float>
+  </assetdata>
+</asset>
+
+<!-- 6 instantiations of the human model for the 6 possible users -->
+<!-- human0 -->
+<model id="skeleton_model0" src="#human_model_with_key" transform="#trans">
+  <assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+    <data name="skeleton_source0" id="skeleton_source_id0" >
+    </data>
+  </assetdata>
+</model>
+
+<!-- human1 -->
+<model id="skeleton_model1" src="#human_model_with_key" transform="#trans">
+  <assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+    <data name="skeleton_source0" id="skeleton_source_id1" >
+    </data>
+  </assetdata>
+</model>
+
+<!-- human2 -->
+<model id="skeleton_model2" src="#human_model_with_key" transform="#trans">
+  <assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+    <data name="skeleton_source2" id="skeleton_source_id2" >
+    </data>
+  </assetdata>
+</model>
+
+<!-- human3 -->
+<model id="skeleton_model3" src="#human_model_with_key" transform="#trans">
+<assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+<data name="skeleton_source3" id="skeleton_source_id3" >
+</data>
+</assetdata>
+</model>
+
+<!-- human4 -->
+<model id="skeleton_model4" src="#human_model_with_key" transform="#trans">
+  <assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+  <data name="skeleton_source4" id="skeleton_source_id4" >
+    </data>
+  </assetdata>
+</model>
+
+<!-- human5 -->
+<model id="skeleton_model5" src="#human_model_with_key" transform="#trans">
+  <assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+    <data name="skeleton_source5" id="skeleton_source_id5" >
+    </data>
+  </assetdata>
+</model>  
+
+</xml3d>
+
+<!-- UI -->
+<!-- debug information -->
+<p id="label"></p>
+
+<!-- form to set parameters -->
+<form action="#">
+  Time step: 
+  <input id="timeStep" type="number" min="1" max="100000" step="1" value="10"><br />
+  Interpolation steps: 
+  <input id="interpolationStepsBetweenRequest" type="number" min="1" max="100" step="1" value="5"><br />
+  Request URL: 
+  <input id="requestBaseUrl" type="text" value="http://localhost:55004/keys"><br />
+  Number of empty answers till hide:
+  <input id="numEmptyPosesToHide" type="number" min="0" max="100" step="1" value="5"><br />
+  <button type="button" onClick="evaluateClientParameterForm()">Update</button>
+</form>
+
+<!-- JavaScript -->
+<!-- does interpolation and requests new poses from the server -->
+<script type="text/javascript">
+
+  //parameters to control server requests and interpolation
+  var timeStep; //time between each action (= step of interpolation)
+  var interpolationStepsBetweenRequest; //number of interpolations before a new request is made
+  var requestKeyIncrement = 1; //key value is arbitrary, only differences matter
+  var interpolationIncrement; //increment to the currentKeyValue done by each interpolation
+  var currentKeyValue = 0; //the current key that is displayed
+  var nextRequestKeyValue = currentKeyValue + requestKeyIncrement; //marks when a new pose should be requested from the server
+  var requestBaseUrl; //url of the server document that returns the pose
+  var intervalId; //access to the timer that calls loopAnimationKey() to be able to change the timeStep
+
+  //variables needed to measure ping (network request time + time needed to add new pose
+  var timeStamp; 
+  var ping = 0;
+  var sumPings = 0;
+  var pingCounter = 0;
+
+  var numModels = 6; //number of models/users supported
+  var numEmptyPosesToHide; //number of times the server returns no values before all models are hidden (sometimes server returns empty answers for one or two frames)
+  var emptyPosesCounter = 0; //counter for the number of times in a row that the server returned an empty result 
+
+  //Reads the configuration values from the form
+  //and sets them in JavaScript 
+  function evaluateClientParameterForm() {
+    interpolationStepsBetweenRequest = $("#interpolationStepsBetweenRequest").val();
+    interpolationIncrement = requestKeyIncrement / interpolationStepsBetweenRequest;
+    requestBaseUrl = $("#requestBaseUrl").val();
+    timeStep = $("#timeStep").val();
+    numEmptyPosesToHide = $("#numEmptyPosesToHide").val();
+    clearInterval(intervalId);
+    intervalId = setInterval(loopAnimationKey, timeStep);
+  }
+
+  //called for every animation step
+  //does interpolation and if needed requests new pose from server
+  function loopAnimationKey() {
+    currentKeyValue += interpolationIncrement;
+    var label = document.getElementById("label");
+    var animationKey = document.getElementById("animation_key"); //current keyframe for interpolation, shared by all models
+
+    //if a new pose is needed
+    if(currentKeyValue >= nextRequestKeyValue) {
+      nextRequestKeyValue = currentKeyValue + requestKeyIncrement;
+      var requestUrl = requestBaseUrl + nextRequestKeyValue; //create a new url to circumvent browser buffering
+
+      timeStamp = Date.now(); //ping time stamp start
+
+      //Ajax request to server
+      $.ajax({
+        url : requestUrl,
+        //parse answer
+        success : function(result){
+
+          var animationTag = result.getElementById("animation");
+
+          //every 10th or 20th request the server answers with an empty animation tag
+          //which would hide all models for one frame (probably because Kinect
+          //looses tracking in one frame). This creates some flickering. In extreme 
+          //cases reloading the models afterwards
+          //takes so long that the models are not visible anymore at all.
+          //Therefore only interpret the scene as empty (so no one is there and
+          //all models should be invisible) if the server answers with no tracking
+          //for a longer period
+          if(animationTag.children.length < 1 && emptyPosesCounter < numEmptyPosesToHide) {
+            emptyPosesCounter++;
+            return;
+          }
+          if(animationTag.children.length > 0) {
+            emptyPosesCounter = 0;
+          }
+
+          //for each model, check if server sent a pose
+          //and update pose of the model
+          for(var i = 0; i < numModels; i++) {				
+            //access to this model in DOM
+            var skelModel = document.getElementById("skeleton_model" + i);
+            //acces to model's new location (translation) in server's answer
+            var locationNode = result.getElementById("location" + i);
+
+            //no location was sent for this model -> person is not tracked
+            if(locationNode == null) {
+              //model was visible before -> hide model
+              if(skelModel.visible) {
+                skelModel.visible = false;
+              }
+              continue;
+            }
+
+            //location was sent -> person is tracked
+
+            //model was invisible before -> show model
+            if(!skelModel.visible) {					
+              skelModel.visible = true;
+            }
+
+            //get values for new pose (location, rotation and scale)
+            var rotationNode = result.getElementById("rotation_quaternion" + i);
+            var scaleNode = result.getElementById("scale" + i);
+            //exact key synchronization between server and client is difficult
+            //and easily leads to errors. 
+            //set the key of the new pose to the expected value. Might differ 
+            //slightly from the actual value but during our tests the difference
+            //was minimal (< 3 ms, probably more when not running on localhost)
+            //and - more important - almost constant, so it is just a shift in time.				
+            locationNode.attributes["key"].value=nextRequestKeyValue;
+            rotationNode.attributes["key"].value=nextRequestKeyValue;
+            scaleNode.attributes["key"].value=nextRequestKeyValue;
+
+            //add new pose
+            var skel = document.getElementById("skeleton_source_id" + i);
+            skel.appendChild(locationNode);
+            skel.appendChild(rotationNode);
+            skel.appendChild(scaleNode);
+
+            //to many poses (i.e. children of skel) make Firefox
+            //crash. And for interpolation only a small amount of poses
+            //are actually needed. Remove older ones which are never
+            //used anymore.
+            if(skel.children.length > 15) {
+              //remove location, rotation and scale
+              skel.removeChild(skel.children[0]); 
+              skel.removeChild(skel.children[0]);
+              skel.removeChild(skel.children[0]);
+            }
+          }
+          //ping time end				
+          ping = (Date.now() - timeStamp);
+          sumPings += ping;
+          pingCounter += 1;
+        }
+      });
+    }
+    //update interpolation value
+    animationKey.textContent = currentKeyValue;
+    label.textContent = "Server request time step:  " + timeStep * interpolationStepsBetweenRequest + " | Key: " + currentKeyValue + " | Request time: " + ping + " | Avr request time: " + (sumPings / pingCounter);
+  }
+
+  $(document).ready(function() {
+    //read default parameters on start
+    evaluateClientParameterForm();
+  });
+</script>
+
+</body>
+</html>
