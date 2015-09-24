@@ -23,9 +23,6 @@ Some of its features are:
 * No initialization phase needed
 * Variable number of interpolation and pose requests (for slower hardware)
 
-This project is a result of the seminar "Cobots - Cooperative Robots" at
-Saarland University (summer semester 2015).
-
 #Extending / using / changing this project
 This project can and has been used as basis for combining other 
 tracking hardware with XML3D. Our work on the Kinect and retargeting part
@@ -37,7 +34,9 @@ We have created a [presentation](https://github.com/michael-aloys/kinect-xml3d-v
 #People
 The authors of this project are Michael Hedderich, Magdalena Kaiser, 
 Dushyant Mehta and Guillermo Reyes. Our advisers are Ingo Zinnikus
-and Kristian Sons.
+and Kristian Sons. This project is a result of the seminar
+"Cobots - Cooperative Robots" at Saarland University, Germany
+(summer semester 2015).
 
 
 
