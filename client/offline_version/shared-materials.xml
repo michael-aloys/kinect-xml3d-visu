@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml3d>
+  <shader compute="(diffuseColor, specularColor, shininess, transparency) = xflow.blenderMaterial(diffuse_color, diffuse_intensity, specular_color, specular_intensity, specular_hardness, alpha)" id="BrownClassicShoesMaterial" script="urn:xml3d:shader:phong">
+    <float name="diffuse_intensity">0.800000011920929</float>
+    <float3 name="diffuse_color">0.800000011920929 0.800000011920929 0.800000011920929</float3>
+    <float name="specular_intensity">0.5</float>
+    <float3 name="specular_color">0.2784000039100647 0.2784000039100647 0.2784000039100647</float3>
+    <float name="specular_hardness">102</float>
+    <float name="alpha">1</float>
+    <texture name="diffuseTexture" wrapS="repeat" wrapT="repeat">
+      <img src="textures/classicshoes_texture_diffuse_png.png"/>
+    </texture>
+  </shader>
+  <shader compute="(diffuseColor, specularColor, shininess, transparency) = xflow.blenderMaterial(diffuse_color, diffuse_intensity, specular_color, specular_intensity, specular_hardness, alpha)" id="worksuit" script="urn:xml3d:shader:phong">
+    <float name="diffuse_intensity">0.800000011920929</float>
+    <float3 name="diffuse_color">0.800000011920929 0.800000011920929 0.800000011920929</float3>
+    <float name="specular_intensity">0.5</float>
+    <float3 name="specular_color">0.03139999881386757 0.03139999881386757 0.03139999881386757</float3>
+    <float name="specular_hardness">50</float>
+    <float name="alpha">1</float>
+    <texture name="diffuseTexture" wrapS="repeat" wrapT="repeat">
+      <img src="textures/worksuit_diffuse_png.png"/>
+    </texture>
+  </shader>
+  <shader compute="(diffuseColor, specularColor, shininess, transparency) = xflow.blenderMaterial(diffuse_color, diffuse_intensity, specular_color, specular_intensity, specular_hardness, alpha)" id="eyebrow001" script="urn:xml3d:shader:phong">
+    <float name="diffuse_intensity">0.800000011920929</float>
+    <float3 name="diffuse_color">0.05286065861582756 0.022173885256052017 0.006995410658419132</float3>
+    <float name="specular_intensity">0.5</float>
+    <float3 name="specular_color">0.0 0.0 0.0</float3>
+    <float name="specular_hardness">128</float>
+    <float name="alpha">1</float>
+  </shader>
+  <shader compute="(diffuseColor, specularColor, shininess, transparency) = xflow.blenderMaterial(diffuse_color, diffuse_intensity, specular_color, specular_intensity, specular_hardness, alpha)" id="Eye_brown" script="urn:xml3d:shader:phong">
+    <float name="diffuse_intensity">0.800000011920929</float>
+    <float3 name="diffuse_color">0.800000011920929 0.800000011920929 0.800000011920929</float3>
+    <float name="specular_intensity">0.5</float>
+    <float3 name="specular_color">1.0 1.0 1.0</float3>
+    <float name="specular_hardness">256</float>
+    <float name="alpha">1</float>
+    <texture name="diffuseTexture" wrapS="repeat" wrapT="repeat">
+      <img src="textures/brown_eye_png.png"/>
+    </texture>
+  </shader>
+  <shader compute="(diffuseColor, specularColor, shininess, transparency) = xflow.blenderMaterial(diffuse_color, diffuse_intensity, specular_color, specular_intensity, specular_hardness, alpha)" id="mhair02black" script="urn:xml3d:shader:phong">
+    <float name="diffuse_intensity">0.800000011920929</float>
+    <float3 name="diffuse_color">0.05286065861582756 0.022173885256052017 0.006995410658419132</float3>
+    <float name="specular_intensity">0.5</float>
+    <float3 name="specular_color">0.050999999046325684 0.050999999046325684 0.050999999046325684</float3>
+    <float name="specular_hardness">127</float>
+    <float name="alpha">1.0</float>
+  </shader>
+  <shader compute="(diffuseColor, specularColor, shininess, transparency) = xflow.blenderMaterial(diffuse_color, diffuse_intensity, specular_color, specular_intensity, specular_hardness, alpha)" id="young_caucasian_male_sweat" script="urn:xml3d:shader:phong">
+    <float name="diffuse_intensity">0.800000011920929</float>
+    <float3 name="diffuse_color">0.800000011920929 0.800000011920929 0.800000011920929</float3>
+    <float name="specular_intensity">0.5</float>
+    <float3 name="specular_color">0.20389999449253082 0.17249999940395355 0.17249999940395355</float3>
+    <float name="specular_hardness">204</float>
+    <float name="alpha">1</float>
+    <texture name="diffuseTexture" wrapS="repeat" wrapT="repeat">
+      <img src="textures/young_lightskinned_male_diffuse_png.png"/>
+    </texture>
+  </shader>
+</xml3d>

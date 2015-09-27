@@ -1,0 +1,102 @@
+<!--
+    Visualization of a Human using Kinect and XML3D - Prototype 2
+    Copyright (C) 2015  Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+
+<!-- 
+This is an old prototype of the client that visualizes prerecorded
+movements (stored as sequence of poses in a file) instead of 
+connecting to the server.
+
+Since the original version of this code is from the beginning of 
+the development phase, it lacked many improvements, such as the improved
+retargeting and the scaling functionality. The main reason this old offline
+version is part of the repository is because it is a useful tool when 
+porting the system from Kinect to another tracking device (so you can
+prerecord some poses and work on the skeleton, retargeting, etc without 
+anyone moving in front of the tracking device all the time).
+
+The code was updated to include the new model and part of the retargeting.
+But due to missing scale information, it won't look that good. But its 
+just for development, anyways.
+
+Authors: Michael Hedderich, Magdalena Kaiser, Dushyant Mehta, Guillermo Reyes
+Last modified: 2015/09/27
+
+-->
+
+
+<html>
+<head>
+  <!-- XML3D scripts -->
+  <script type="text/javascript" src="common/scripts/xml3d/xml3d-4.8-min.js"></script>
+  <script type="text/javascript" src="common/scripts/blender-xflow.js"></script>
+  <script type="text/javascript" src="common/scripts/xml3d/camera.js"></script> <!-- moves camera -->
+  <title>Old offline version! Visualization of a Human using Kinect and XML3D</title>
+</head>
+<body>
+<xml3d style="border: 1px solid gray">
+ 
+ <!-- set camera view -->
+ <view position="0 10 200" ></view>
+ 
+  <!-- Lightning -->
+  <lightshader id="light1" script="urn:xml3d:lightshader:directional" >
+        <float3 name="intensity" >1 1 1</float3>
+  </lightshader>
+  <light shader="#light1" ></light>
+ 
+  <!-- a triangle to make relative orientation in space better visible -->
+ <mesh type="triangles">
+    <int name="index">0 1 2</int>
+    <float3 name="position">-1 -1 -5  1 -1 -5  0 1 -5 </float3>
+    <float3 name="normal">
+      0 0 1
+      0 0 1
+      0 0 1
+    </float3>
+  </mesh>
+  
+  <!-- transformation to adapt the exported human model to the scene -->
+  <transform id="transform" rotation="0 0 1 0" scale="1 1 1" translation="0 0 0" ></transform>
+  
+  <!-- model of the male worker -->
+  <model src="assets/maleWorker.xml#human_model" transform="#transform">
+		<assetdata name="human_model_mesh" compute="dataflow['common/xflow/dataflows.xml#blenderSkinning']">
+			<float name="animKey" id="animationKey">1.0</float>
+    </assetdata>
+   </model>
+</xml3d>
+
+<!-- label to show the current key frame -->
+<p id="label"></p>
+
+<!-- script for updating the animation keyframe of the model -->
+<script type="text/javascript">
+   var keyValue = 0.0;
+
+   function loopAnimationKey() {
+      keyValue = (keyValue+0.5) % 317; <!-- set here the animation speed and the maximum key value -->
+      document.getElementById("animationKey").textContent = keyValue;
+      document.getElementById("label").textContent = keyValue;
+   }
+
+   setInterval(loopAnimationKey, 30);
+</script>
+
+</body>
+</html>

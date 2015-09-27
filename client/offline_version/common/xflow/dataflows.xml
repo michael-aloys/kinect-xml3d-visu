@@ -1,0 +1,41 @@
+<xml3d xmlns="http://www.xml3d.org/2009/xml3d">
+<!-- Skinning, based on xml3D blender exporter dataflow. Added mapping
+from Kinect's model to Blender's model -->
+<dataflow id="blenderSkinning" out="position, normal">
+  <int param="true" name="bone_parent"/>
+  <float4 param="true" name="rotation_quaternion"/>
+  <float3 param="true" name="position"/>
+  <float3 param="true" name="location"/>
+  <float3 param="true" name="scale"/>
+  <float3 param="true" name="normal"/>
+  <int4 param="true" name="bone_index"/>
+  <float4 param="true" name="bone_weight"/>
+  <float4x4 param="true" name="offset_matrix"/>
+  <float4x4 param="true" name="global_inverse_matrix"/>
+  <float4x4 param="true" name="tx_global"/>
+  <float4x4 param="true" name="mapping"/>
+  <float param="true" name="animKey">0</float>
+  <compute>
+  rot = xflow.slerpSeq(rotation_quaternion, animKey);
+  loc = xflow.lerpSeq(location, animKey);
+  <!-- The scale value is fixed in the code because no scaling was recorded. 
+  Usually the scale value is part of the transmitted pose -->
+
+  animation_global_matrix = xflow.createTransform({translation: loc, rotation: rot, scale: scale});
+
+  <!-- mapping, correction of the transformation -->
+  animation_global_matrix = xflow.mul(mapping, animation_global_matrix);
+  pose = xflow.mulSingle(animation_global_matrix, tx_global);
+  
+  pose = xflow.mul(offset_matrix, pose);
+  pose = xflow.mulSingle(pose, global_inverse_matrix);
+
+  <!-- no forwardKinematics are used because Kinect already
+  supplies values in global space -->
+
+  normal = xflow.skinDirection(normal, bone_index, bone_weight, pose);
+  position = xflow.skinPosition(position, bone_index, bone_weight, pose);
+
+  </compute>
+</dataflow>
+</xml3d>
