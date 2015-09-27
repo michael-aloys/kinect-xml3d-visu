@@ -7,11 +7,11 @@ The basic 3D model of the worker was created using the software MakeHuman
 
 The 3D model, we adapted in Blender to fit Kinect's skeleton, was exported
 using Kristian Sons' exporter (https://github.com/ksons/xml3d-blender-exporter).
-The following files in the client/online_version/ directory have been created
-by this exporter:
-- armatures.xml
+The following files in the client/online_version/ and client/offline_version
+directory have been created by this exporter:
 - shared-materials.xml
 The following files are modified versions of files created by this exporter:
+- armatures.xml
 - common/xflow/dataflows.xml
 - common/scripts/blender-xflow.js
 - assets/maleWorker.xml
