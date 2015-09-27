@@ -4,7 +4,7 @@ and XML3D.
 
 # About
 This set of programs can be used to track up to six people using Kinect 
-v2 and visualize them in real time inside the browser in 3D. We use 
+for Windows v2 and visualize them in real time inside the browser in 3D. We use 
 [XML3D](http://xml3d.org/) and Xflow which allow to display 3D
 content in the browser by just including a JavaScript library.
 
@@ -35,13 +35,13 @@ We have created a [presentation](https://github.com/michael-aloys/kinect-xml3d-v
 
 ## Client - online version
 Just open the online-version.html in your browser. It expects the 
-tracking server running at the URL defined on the lower part of the page 
+tracking server to be running at the URL defined on the lower part of the page 
 (default: http://localhost:55004).
 
 In theory, XML3D supports all modern browsers. We have experienced some
 problems with a stricter Cross-Origin-Policy in Google Chrome and 
 Microsoft Edge when starting the client from the local file system. The
-system has been tested successfully on Firefox 41. 
+system has been tested successfully with Firefox 41. 
 
 ## Server
 The server is written in C++. To build the server, you need to install 
@@ -63,7 +63,7 @@ model is also part of the client code.
 
 ## Retargeting
 The retrageting directoy contains the matlab code used to calculate
-the transformation matrices necessary to transform a recorded A-pose
+the transformation matrices necessary to transform a recorded pose
 from Kinect to the same pose in Blender/XML3D. We use these transformations
 to retarget the pose data received from Kinect inside the client's Xflow
 code. This improves the quality of the visualization strongly. Retargeting
@@ -81,7 +81,7 @@ the development phase, it lacked many improvements, such as the improved
 retargeting and the scaling functionality. The main reason this old offline
 version is part of the repository is because it is a useful tool when 
 porting the system from Kinect to another tracking device (so you can
-prerecord some poses and work on the skeleton, retargeting, etc without 
+prerecord some poses and work on the skeleton, retargeting, etc. without 
 anyone moving in front of the tracking device all the time).
 
 The code was updated to include the new model and part of the retargeting.
@@ -90,7 +90,7 @@ just for development, anyways.
 
 ## Presentation
 The repository includes a presentation that explains the structure
-of the system, techincal details, open problems and todos, etc. 
+of the system, technical details, open problems and todos, etc. 
 
 
 #People
