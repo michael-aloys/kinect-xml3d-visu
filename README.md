@@ -94,8 +94,8 @@ of the system, technical details, open problems and todos, etc.
 
 
 #People
-The authors of this project are Michael Hedderich, Magdalena Kaiser, 
-Dushyant Mehta and Guillermo Reyes. Our advisers are Ingo Zinnikus
+The authors of this project are [Michael Hedderich](https://www.michael-hedderich.de), Magdalena Kaiser, 
+Dushyant Mehta and [Guillermo Reyes](https://github.com/enggrey). Our advisers are Ingo Zinnikus
 and Kristian Sons. This project is a result of the seminar
 "Cobots - Cooperative Robots" at Saarland University, Germany
 (summer semester 2015).
