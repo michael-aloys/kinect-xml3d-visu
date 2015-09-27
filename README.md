@@ -12,7 +12,7 @@ You can watch a demonstration here:
 
 [![YouTube Thumbnail](http://img.youtube.com/vi/WPJaDTGAIaI/1.jpg)](https://youtu.be/WPJaDTGAIaI)
 
-There also exists a video of our first prototype:
+There also exists a video of our first (older) prototype:
 
 [![YouTube Thumbnail](http://img.youtube.com/vi/BYWWkNrQdMg/3.jpg)](https://youtu.be/BYWWkNrQdMg) 
 
